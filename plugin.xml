@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="cordova-baidu-asr"
+        version="1.0.0">
+
+    <name>BaiduASR</name>
+    <description>百度ASR语音识别插件</description>
+    <license>MIT</license>
+    <author>hankers.yan</author>
+    <keywords>Baidu, ASR, Speech, Recognition, AI</keywords>
+
+    <repo>https://github.com/hankersyan/cordova-baidu-asr</repo>
+    <issue>https://github.com/hankersyan/cordova-baidu-asr/issues</issue>
+
+    <engines>
+        <engine name="cordova" version=">=7.1.0"/>
+        <engine name="cordova-android" version=">=6.3.0"/>
+    </engines>
+    <js-module src="www/BaiduASR.js" name="BaiduASR">
+        <clobbers target="BaiduASR"/>
+    </js-module>
+
+    <preference name="APP_ID" />
+    <preference name="API_KEY" />
+    <preference name="SECRET_KEY" />
+
+    <platform name="ios">
+
+        <config-file target="config.xml" parent="/*">
+            <feature name="BaiduASR">
+                <param name="ios-package" value="CDVBaiduASR"/>
+            </feature>
+            <preference name="APP_ID" value="$APP_ID" />
+            <preference name="API_KEY" value="$API_KEY" />
+            <preference name="SECRET_KEY" value="$SECRET_KEY" />
+        </config-file>
+
+        <config-file target="*-Info.plist" parent="NSMicrophoneUsageDescription">
+            <string>允许使用麦克风</string>
+        </config-file>
+
+        <header-file src="src/ios/CDVBaiduASR.h"/>
+        <source-file src="src/ios/CDVBaiduASR.m"/>
+        <header-file src="src/ios/BDSClientHeaders/ASR/BDSEventManager.h"/>
+        <header-file src="src/ios/BDSClientHeaders/ASR/BDSASRDefines.h"/>
+        <header-file src="src/ios/BDSClientHeaders/ASR/BDSASRParameters.h"/>
+        <header-file src="src/ios/BDSClientHeaders/ASR/UIHeaders/BDTheme.h"/>
+        <header-file src="src/ios/BDSClientHeaders/ASR/UIHeaders/BDRecognizerViewParamsObject.h"/>
+        <header-file src="src/ios/BDSClientHeaders/ASR/UIHeaders/BDRecognizerViewController.h"/>
+        <header-file src="src/ios/BDSClientHeaders/ASR/UIHeaders/BDRecognizerViewDelegate.h"/>
+
+				<resource-file src="src/ios/BDSClientResource/ASR/BDSClientResources/Theme/defaultTheme.bundle" target="ASR/BDSClientResources/Theme/defaultTheme.bundle" />
+				<resource-file src="src/ios/BDSClientResource/ASR/BDSClientResources/Tone/record_cancel.caf" target="ASR/BDSClientResources/Tone/record_cancel.caf" />
+				<resource-file src="src/ios/BDSClientResource/ASR/BDSClientResources/Tone/record_end.caf" target="ASR/BDSClientResources/Tone/record_end.caf" />
+				<resource-file src="src/ios/BDSClientResource/ASR/BDSClientResources/Tone/record_fail.caf" target="ASR/BDSClientResources/Tone/record_fail.caf" />
+				<resource-file src="src/ios/BDSClientResource/ASR/BDSClientResources/Tone/record_start.caf" target="ASR/BDSClientResources/Tone/record_start.caf" />
+				<resource-file src="src/ios/BDSClientResource/ASR/BDSClientResources/Tone/record_success.caf" target="ASR/BDSClientResources/Tone/record_success.caf" />
+				<resource-file src="src/ios/BDSClientResource/ASR/BDSClientEASRResources/bds_easr_basic_model.dat" target="ASR/BDSClientEASRResources/bds_easr_basic_model.dat" />
+
+        <source-file src="src/ios/BDSClientLib/libBaiduSpeechSDK.a" framework="true" compiler-flags="-fno-objc-arc"/>
+
+        <framework src="libc++.tbd" />
+        <framework src="libz.1.2.5.tbd" />
+        <framework src="libsqlite3.0.tbd" />
+        <framework src="AudioToolbox.framework" />
+        <framework src="AVFoundation.framework" />
+        <framework src="CFNetwork.framework" />
+        <framework src="CoreLocation.framework" />
+        <framework src="CoreTelephony.framework" />
+        <framework src="SystemConfiguration.framework" />
+        <framework src="GLKit.framework" />
+
+    </platform>
+
+</plugin>
