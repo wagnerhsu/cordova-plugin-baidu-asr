@@ -1,1 +1,0 @@
-The Android .aar sources are [here](https://github.com/hankersyan/cordova-baidu-ocr).
