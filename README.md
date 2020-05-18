@@ -5,6 +5,8 @@
 
 由于iOS的静态库太大，仅保留 arm64 部分，删掉了 armv7, i386, x86_64，故只能在真机上调试。
 
+要求：iOS的bundleID与Android的package名一样，百度云只需创建一个语音识别项目，输入该值。
+
 
 ## Installation
 
@@ -15,7 +17,7 @@
 
 在线识别:
 ```js
-    BaiduASR.startOnline((result)=>{
-            console.log(JSON.stringify(result));
-        });
+BaiduASR.startOnline((result)=>{
+    console.log(JSON.stringify(result));
+});
 ```
