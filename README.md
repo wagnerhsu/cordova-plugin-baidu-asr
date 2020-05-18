@@ -5,8 +5,6 @@
 
 由于iOS的静态库太大，仅保留 arm64 部分，删掉了 armv7, i386, x86_64，故只能在真机上调试。
 
-要求：iOS的bundleID与Android的package名一样，百度云只需创建一个语音识别项目，输入该值。
-
 
 ## Installation
 
@@ -20,4 +18,16 @@
 BaiduASR.startOnline((result)=>{
     console.log(JSON.stringify(result));
 });
+```
+
+### 注意
+
+1. iOS的bundleID与Android的package名一样，百度云只需创建一个语音识别项目，在包名处输入该值。
+
+2. 确保 AndroidManifest.xml 的 Application 中有三个参数，某些情况会被其他配置覆盖掉
+
+```html
+<meta-data android:name="com.baidu.speech.APP_ID" android:value="<百度云提供>" />
+<meta-data android:name="com.baidu.speech.API_KEY" android:value="<百度云提供>" />
+<meta-data android:name="com.baidu.speech.SECRET_KEY" android:value="<百度云提供>" />
 ```
