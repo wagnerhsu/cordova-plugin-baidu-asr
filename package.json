@@ -1,6 +1,6 @@
 {
     "name": "cordova-baidu-asr",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Cordova plugin of Baidu ASR",
     "cordova": {
         "id": "cordova-baidu-asr",
@@ -17,7 +17,9 @@
         "ecosystem:cordova",
         "cordova-ios",
         "cordova-android",
-        "cordova:plugin"
+        "cordova:plugin",
+        "Speech Recognition",
+        "ASR"
     ],
     "engines": {
         "cordovaDependencies": {
