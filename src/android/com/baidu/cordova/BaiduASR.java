@@ -35,9 +35,9 @@ public class BaiduASR extends CordovaPlugin {
     private static String TAG = BaiduASR.class.getSimpleName();
 
     private CallbackContext mCallback;
-    private Handler handler;
-    private ChainRecogListener chainRecogListener;
-    private MyRecognizer myRecognizer;
+    private static Handler handler;
+    private static ChainRecogListener chainRecogListener;
+    private static MyRecognizer myRecognizer;
     private DigitalDialogInput input;
     private final static int REQUEST_CODE_RECOGNIZE_ONLINE = 2;
 
@@ -58,34 +58,36 @@ public class BaiduASR extends CordovaPlugin {
 
         initPermission();
 
-        handler = new Handler() {
+        if (myRecognizer != null) {
+            handler = new Handler() {
 
-            /*
-             * @param msg
-             */
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                handleMsg(msg);
-            }
+                /*
+                 * @param msg
+                 */
+                @Override
+                public void handleMessage(Message msg) {
+                    super.handleMessage(msg);
+                    //handleMsg(msg);
+                }
 
-        };
+            };
 
-        try {
-            IRecogListener listener = new MessageStatusRecogListener(handler);
-            myRecognizer = new MyRecognizer(cordova.getContext(), listener);
+            try {
+                IRecogListener listener = new MessageStatusRecogListener(handler);
+                myRecognizer = new MyRecognizer(Build.VERSION.SDK_INT >= 21 ? cordova.getActivity().getWindow().getContext() : cordova.getActivity().getApplicationContext(), listener);
 //        if (enableOffline) {
 //            // 基于DEMO集成1.4 加载离线资源步骤(离线时使用)。offlineParams是固定值，复制到您的代码里即可
 //            Map<String, Object> offlineParams = OfflineRecogParams.fetchOfflineParams();
 //            myRecognizer.loadOfflineEngine(offlineParams);
 //        }
 
-            chainRecogListener = new ChainRecogListener();
-            // DigitalDialogInput 输入 ，MessageStatusRecogListener可替换为用户自己业务逻辑的listener
-            chainRecogListener.addListener(new MessageStatusRecogListener(handler));
-            myRecognizer.setEventListener(chainRecogListener); // 替换掉原来的listener
-        } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
+                chainRecogListener = new ChainRecogListener();
+                // DigitalDialogInput 输入 ，MessageStatusRecogListener可替换为用户自己业务逻辑的listener
+                chainRecogListener.addListener(new MessageStatusRecogListener(handler));
+                myRecognizer.setEventListener(chainRecogListener); // 替换掉原来的listener
+            } catch (Exception e) {
+                Log.e(TAG, e.getMessage());
+            }
         }
     }
 
