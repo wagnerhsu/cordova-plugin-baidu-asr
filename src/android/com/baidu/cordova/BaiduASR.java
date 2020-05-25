@@ -58,7 +58,7 @@ public class BaiduASR extends CordovaPlugin {
 
         initPermission();
 
-        if (myRecognizer != null) {
+        if (myRecognizer == null) {
             handler = new Handler() {
 
                 /*
@@ -74,7 +74,7 @@ public class BaiduASR extends CordovaPlugin {
 
             try {
                 IRecogListener listener = new MessageStatusRecogListener(handler);
-                myRecognizer = new MyRecognizer(Build.VERSION.SDK_INT >= 21 ? cordova.getActivity().getWindow().getContext() : cordova.getActivity().getApplicationContext(), listener);
+                myRecognizer = new MyRecognizer(android.os.Build.VERSION.SDK_INT >= 21 ? cordova.getActivity().getWindow().getContext() : cordova.getActivity().getApplicationContext(), listener);
 //        if (enableOffline) {
 //            // 基于DEMO集成1.4 加载离线资源步骤(离线时使用)。offlineParams是固定值，复制到您的代码里即可
 //            Map<String, Object> offlineParams = OfflineRecogParams.fetchOfflineParams();
