@@ -71,18 +71,22 @@ public class BaiduASR extends CordovaPlugin {
 
         };
 
-        IRecogListener listener = new MessageStatusRecogListener(handler);
-        myRecognizer = new MyRecognizer(cordova.getContext(), listener);
+        try {
+            IRecogListener listener = new MessageStatusRecogListener(handler);
+            myRecognizer = new MyRecognizer(cordova.getContext(), listener);
 //        if (enableOffline) {
 //            // 基于DEMO集成1.4 加载离线资源步骤(离线时使用)。offlineParams是固定值，复制到您的代码里即可
 //            Map<String, Object> offlineParams = OfflineRecogParams.fetchOfflineParams();
 //            myRecognizer.loadOfflineEngine(offlineParams);
 //        }
 
-        chainRecogListener = new ChainRecogListener();
-        // DigitalDialogInput 输入 ，MessageStatusRecogListener可替换为用户自己业务逻辑的listener
-        chainRecogListener.addListener(new MessageStatusRecogListener(handler));
-        myRecognizer.setEventListener(chainRecogListener); // 替换掉原来的listener
+            chainRecogListener = new ChainRecogListener();
+            // DigitalDialogInput 输入 ，MessageStatusRecogListener可替换为用户自己业务逻辑的listener
+            chainRecogListener.addListener(new MessageStatusRecogListener(handler));
+            myRecognizer.setEventListener(chainRecogListener); // 替换掉原来的listener
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
+        }
     }
 
     protected void handleMsg(Message msg) {
