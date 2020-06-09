@@ -25,6 +25,8 @@ void (^_failHandler)(NSError *);
 @property(strong, nonatomic) BDSEventManager *asrEventManager;
 @property(nonatomic, strong) BDRecognizerViewController *recognizerViewController;
 
+@property(nonatomic, assign) BOOL longSpeechFlag;
+
 @end
 
 @implementation CDVBaiduASR {
@@ -53,6 +55,16 @@ NSString* _callbackId = nil;
     //[self configFileHandler];
     [self configRecognizerViewController];
     [self.recognizerViewController startVoiceRecognition];
+}
+
+- (void)startLong:(CDVInvokedUrlCommand *)command {
+    _callbackId = command.callbackId;
+    [self longSpeechRecognition];
+}
+
+- (void)stopLong:(CDVInvokedUrlCommand *)command {
+    self.longSpeechFlag = NO;
+    [self.asrEventManager sendCommand:BDS_ASR_CMD_STOP];
 }
 
 - (void)configVoiceRecognitionClient {
@@ -103,6 +115,26 @@ NSString* _callbackId = nil;
                                                                                                       delegate:self];
 }
 
+- (void)longSpeechRecognition
+{
+    self.longSpeechFlag = YES;
+    [self.asrEventManager setParameter:@(NO) forKey:BDS_ASR_NEED_CACHE_AUDIO];
+    [self.asrEventManager setParameter:@"" forKey:BDS_ASR_OFFLINE_ENGINE_TRIGGERED_WAKEUP_WORD];
+    [self.asrEventManager setParameter:@(YES) forKey:BDS_ASR_ENABLE_LONG_SPEECH];
+    // 长语音请务必开启本地VAD
+    [self.asrEventManager setParameter:@(YES) forKey:BDS_ASR_ENABLE_LOCAL_VAD];
+    [self voiceRecogButtonHelper];
+}
+
+- (void)voiceRecogButtonHelper
+{
+    // [self configFileHandler];
+    [self.asrEventManager setDelegate:self];
+    [self.asrEventManager setParameter:nil forKey:BDS_ASR_AUDIO_FILE_PATH];
+    [self.asrEventManager setParameter:nil forKey:BDS_ASR_AUDIO_INPUT_STREAM];
+    [self.asrEventManager sendCommand:BDS_ASR_CMD_START];
+}
+
 #pragma mark - MVoiceRecognitionClientDelegate
 
 - (void)VoiceRecognitionClientWorkStatus:(int)workStatus obj:(id)aObj {
@@ -130,6 +162,7 @@ NSString* _callbackId = nil;
     [resultDic setObject:result forKey:@"result"];
 
     CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:resultDic];
+    [pluginResult setKeepCallback:[NSNumber numberWithInt:1]];
     
     [self.commandDelegate sendPluginResult:pluginResult callbackId:_callbackId];
 }

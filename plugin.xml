@@ -2,7 +2,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="cordova-baidu-asr"
-        version="1.0.4">
+        version="1.1.0">
 
     <name>BaiduASR</name>
     <description>百度ASR语音识别插件</description>
@@ -108,6 +108,7 @@
         </config-file>
         
         <source-file src="src/android/com/baidu/cordova/BaiduASR.java" target-dir="src/com/baidu/cordova"/>
+        <source-file src="src/android/com/baidu/aip/asrwakeup3/core/mini/AutoCheck.java" target-dir="src/com/baidu/aip/asrwakeup3/core/mini"/>
         <source-file src="src/android/com/baidu/aip/asrwakeup3/core/recog/IStatus.java" target-dir="src/com/baidu/aip/asrwakeup3/core/recog"/>
         <source-file src="src/android/com/baidu/aip/asrwakeup3/core/recog/MyRecognizer.java" target-dir="src/com/baidu/aip/asrwakeup3/core/recog"/>
         <source-file src="src/android/com/baidu/aip/asrwakeup3/core/recog/RecogResult.java" target-dir="src/com/baidu/aip/asrwakeup3/core/recog"/>
@@ -187,6 +188,7 @@
         <resource-file src="src/android/resources/BaiduASRDigitalDialog_en.properties" target="resources/BaiduASRDigitalDialog_en.properties" />
         
         <framework src="com.android.support:appcompat-v7:27.1.1"/>
+        <framework src="src/android/baiduasr.gradle" custom="true" type="gradleReference"/>
         
         <resource-file src="src/android/jniLibs/arm64-v8a/libBaiduSpeechSDK.so" target="jniLibs/arm64-v8a/libBaiduSpeechSDK.so"/>
         <resource-file src="src/android/jniLibs/arm64-v8a/libvad.dnn.so" target="jniLibs/arm64-v8a/libvad.dnn.so"/>

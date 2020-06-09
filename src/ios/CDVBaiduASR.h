@@ -11,5 +11,7 @@
 @interface CDVBaiduASR : CDVPlugin
 
 - (void)startOnline:(CDVInvokedUrlCommand *)command;
+- (void)startLong:(CDVInvokedUrlCommand *)command;
+- (void)stopLong:(CDVInvokedUrlCommand *)command;
 
 @end

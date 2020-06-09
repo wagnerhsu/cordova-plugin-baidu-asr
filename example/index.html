@@ -20,6 +20,12 @@
             <input type="button" id="asr" value="start ASR"
               style="padding: 30px;display: block;min-height: 60px;min-width: 120px;margin: auto;"
               onclick="startASR()">
+            <input type="button" value="start long"
+                   style="padding: 10px;"
+                   onclick="startLong()">
+            <input type="button" value="stop long"
+                   style="padding: 10px;"
+                   onclick="stopLong()">
         </div>
     </div>
     <script type="text/javascript" src="cordova.js"></script>
@@ -30,6 +36,16 @@ function startASR() {
 	BaiduASR.startOnline((res) => {
         document.getElementById('result').value = res.result;
 	});
+}
+function startLong() {
+	BaiduASR.startLong((res) => {
+	    var resultTxt = document.getElementById('result');
+	    var old = resultTxt.value;
+        resultTxt.value = res.result + '\n' + old;
+	});
+}
+function stopLong() {
+	BaiduASR.stopLong();
 }
 </script>
 </html>

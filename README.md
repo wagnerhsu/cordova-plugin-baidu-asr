@@ -20,6 +20,20 @@ BaiduASR.startOnline((result)=>{
 });
 ```
 
+开始长语音:
+```js
+BaiduASR.startLong((res) => {
+    var resultTxt = document.getElementById('result');
+    var oldVal = resultTxt.value;
+    resultTxt.value = res.result + '\n' + oldVal;
+});
+```
+
+结束长语音:
+```js
+BaiduASR.stopLong();
+```
+
 ### 注意
 
 1. iOS的bundleID与Android的package名一样，百度云只需创建一个语音识别项目，在包名处输入该值。
