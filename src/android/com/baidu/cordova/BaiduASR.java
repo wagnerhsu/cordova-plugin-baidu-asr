@@ -143,7 +143,7 @@ public class BaiduASR extends CordovaPlugin {
      */
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 
-        cordova.getThreadPool().execute(() -> {
+        cordova.getActivity().runOnUiThread(() -> {
             try {
                 Method method = BaiduASR.class.getDeclaredMethod(action, JSONArray.class, CallbackContext.class);
                 method.invoke(BaiduASR.this, args, callbackContext);
