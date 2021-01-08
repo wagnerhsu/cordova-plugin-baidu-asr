@@ -1,6 +1,6 @@
 {
     "name": "cordova-baidu-asr",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "description": "Cordova plugin of Baidu ASR",
     "cordova": {
         "id": "cordova-baidu-asr",
