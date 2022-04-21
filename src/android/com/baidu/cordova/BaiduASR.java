@@ -28,6 +28,7 @@ import org.json.JSONObject;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class BaiduASR extends CordovaPlugin {
@@ -220,6 +221,24 @@ public class BaiduASR extends CordovaPlugin {
         }
     }
 
+    private Map<String, Object> readParams(JSONArray args) throws JSONException {
+        final Map<String, Object> params = new HashMap<>();
+
+        if (args != null) {
+            if (args.get(0) instanceof JSONObject) {
+                JSONObject jsonObject = args.getJSONObject(0);
+                Iterator<String> keys = jsonObject.keys();
+
+                while(keys.hasNext()) {
+                    String key = keys.next();
+                    params.put(key, jsonObject.get(key));
+                }
+            }
+        }
+
+        return params;
+    }
+
     /**
      * 在线识别
      *
@@ -230,7 +249,7 @@ public class BaiduASR extends CordovaPlugin {
     void startOnline(JSONArray data, CallbackContext callbackContext) throws JSONException {
         initRecog();
 
-        final Map<String, Object> params = new HashMap<>();
+        final Map<String, Object> params = readParams(data);
 
         // BaiduASRDigitalDialog的输入参数
         input = new DigitalDialogInput(myRecognizer, chainRecogListener, params);
@@ -256,7 +275,7 @@ public class BaiduASR extends CordovaPlugin {
     void startLong(JSONArray data, CallbackContext callbackContext) throws JSONException {
         initRecog();
 
-        final Map<String, Object> params = new HashMap<>();
+        final Map<String, Object> params = readParams(data);
 
         params.put("vad.endpoint-timeout", "0");
         params.put("enable.numberformat", "true");

@@ -33,15 +33,23 @@
 </body>
 <script>
 function startASR() {
-	BaiduASR.startOnline((res) => {
+	BaiduASR.startOnline({
+	    'pid': 1537 // 1537 普通话, 1837 四川话, 1637 粤语, 1737 英语
+	}, (res) => {
         document.getElementById('result').value = res.result;
 	});
 }
 function startLong() {
-	BaiduASR.startLong((res) => {
+	BaiduASR.startLong({
+	    'pid': 1537
+	}, (res) => {
+	    console.log('startLong', res);
 	    var resultTxt = document.getElementById('result');
+	    console.log(resultTxt);
 	    var old = resultTxt.value;
+	    console.log(old);
         resultTxt.value = res.result + '\n' + old;
+	    console.log('End');
 	});
 }
 function stopLong() {

@@ -3,10 +3,11 @@ var exec = cordova.require("cordova/exec");
 var BaiduASR = {
     /**
      * 在线识别
+     * @param options
      * @param successCallback
      * @param errorCallback
      */
-    startOnline: function(successCallback, errorCallback) {
+     startOnline: function(options, successCallback, errorCallback) {
 
         if (errorCallback == null) {
             errorCallback = function() {};
@@ -17,14 +18,15 @@ var BaiduASR = {
             return;
         }
 
-        exec(successCallback, errorCallback, 'BaiduASR', 'startOnline', []);
+        exec(successCallback, errorCallback, 'BaiduASR', 'startOnline', [options]);
     },
     /**
      * 长语音
+     * @param options
      * @param successCallback
      * @param errorCallback
      */
-    startLong: function(successCallback, errorCallback) {
+    startLong: function(options, successCallback, errorCallback) {
 
         if (errorCallback == null) {
             errorCallback = function() {};
@@ -35,7 +37,7 @@ var BaiduASR = {
             return;
         }
 
-        exec(successCallback, errorCallback, 'BaiduASR', 'startLong', []);
+        exec(successCallback, errorCallback, 'BaiduASR', 'startLong', [options]);
     },
     /**
      * 结束长语音
